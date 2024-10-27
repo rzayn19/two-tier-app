@@ -1,0 +1,39 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger on
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+      MYSQL_IMAGE: runity77/mysql-app
+      FLASK_IMAGE: runity77/flask-app
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build MySQL Docker Image
+        run: |
+          docker build -t $MYSQL_IMAGE:latest -f ./mysql/Dockerfile ./mysql
+
+      - name: Build Flask Docker Image
+        run: |
+          docker build -t $FLASK_IMAGE:latest . 
+
+      - name: Push MySQL Docker Image
+        run: |
+          docker push $MYSQL_IMAGE:latest
+
+      - name: Push Flask Docker Image
+        run: |
+          docker push $FLASK_IMAGE:latest
