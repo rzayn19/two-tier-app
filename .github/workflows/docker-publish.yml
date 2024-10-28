@@ -22,20 +22,20 @@ jobs:
 
       - name: Log in to ACR
         run: |
-             az acr login --name $acr-name
+             az acr login --name $acr_name
    
       - name: Build MySQL image
         run: |
-             docker build -t $acr-name.azurecr.io/mysql:latest -f mysql/Dockerfile .
+             docker build -t $acr_name.azurecr.io/mysql:latest -f mysql/Dockerfile .
    
       - name: Build Flask app image
         run: |
-             docker build -t $acr-name.azurecr.io/flask-app:latest .
+             docker build -t $acr_name.azurecr.io/flask-app:latest .
    
       - name: Push MySQL image to ACR
         run: |
-             docker push $acr-name.azurecr.io/mysql:latest
+             docker push $acr_name.azurecr.io/mysql:latest
    
       - name: Push Flask app image to ACR
         run: |
-             docker push $acr-name.azurecr.io/flask-app:latest
+             docker push $acr_name.azurecr.io/flask-app:latest
