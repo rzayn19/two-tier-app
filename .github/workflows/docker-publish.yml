@@ -9,7 +9,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      acr_name: rcr777.azurecr.io
+      acr_name: rcr777.azurecr.io/twotier
 
     steps:
       - name: Checkout repository
